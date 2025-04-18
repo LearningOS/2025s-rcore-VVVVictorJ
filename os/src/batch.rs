@@ -11,11 +11,13 @@ const MAX_APP_NUM: usize = 16;
 const APP_BASE_ADDRESS: usize = 0x80400000;
 const APP_SIZE_LIMIT: usize = 0x20000;
 
+// 内核栈
 #[repr(align(4096))]
 struct KernelStack {
     data: [u8; KERNEL_STACK_SIZE],
 }
 
+//用户栈
 #[repr(align(4096))]
 struct UserStack {
     data: [u8; USER_STACK_SIZE],
@@ -48,9 +50,9 @@ impl UserStack {
 }
 
 struct AppManager {
-    num_app: usize,
-    current_app: usize,
-    app_start: [usize; MAX_APP_NUM + 1],
+    num_app: usize, // 应用程序数量
+    current_app: usize, // 当前运行的应用程序ID
+    app_start: [usize; MAX_APP_NUM + 1], // 各应用程序的起始地址数组
 }
 
 impl AppManager {
